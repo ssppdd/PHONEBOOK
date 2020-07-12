@@ -21,10 +21,6 @@ public class ContactServiceImpl implements ContactService {
 	@Override
 	public boolean saveContact(Contact c) {
 		ContactEntity entity = new ContactEntity();
-		/*if(c.getContactId()!=null) {
-			Optional<ContactEntity> findById = contactRepo.findById(c.getContactId());
-			entity = findById.get();
-		}*/
 		BeanUtils.copyProperties(c, entity);
 		ContactEntity savedEntity = contactRepo.save(entity);
 		return savedEntity.getContactId() != null;
@@ -33,18 +29,7 @@ public class ContactServiceImpl implements ContactService {
 	@Override
 	public List<Contact> getAllContacts() {
 		List<ContactEntity> entities = contactRepo.findAll();
-		
-		
-		//legacy approach
-		/*List<Contact> contacts = new ArrayList<Contact>();
-		for(ContactEntity entity : entities) {
-			Contact contact = new Contact();
-			BeanUtils.copyProperties(entity, contact);
-			contacts.add(contact);
-		}*/
-		
-		//java 8 approach
-		return entities.stream().map(entity -> {
+			return entities.stream().map(entity -> {
 			Contact contact = new Contact();
 			BeanUtils.copyProperties(entity, contact);
 			return contact;
@@ -65,7 +50,7 @@ public class ContactServiceImpl implements ContactService {
 
 	@Override
 	public boolean updateContact(Contact c) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
